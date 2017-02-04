@@ -72,19 +72,21 @@ public class DbAdapter {
      * insertarTarea
      * Inserta un registro con los campos titulo y cuerpo en la base de datos.
      *
-     * @param task
+     * @param name
      * @return Devuelve el número de registro insertado 0 -1 en caso de error
      */
-    public long insertarTarea(String task, int backendId) {
+    public long insertarTarea(String name, String description, Float price, int idBackend) {
         // Creamos un registro
         ContentValues registro = new ContentValues();
-        Log.d("PELLODEBUG","DbAdapter> Insert: " + task + " id: " + backendId);
+        Log.d("PELLODEBUG","DbAdapter> Insert: " + name + " id: " + idBackend);
         // Agrega los datos.
-        registro.put("task", task);
-        registro.put("id_backend", backendId);
+        registro.put("name", name);
+        registro.put("description", description);
+        registro.put("price", price);
+        registro.put("id_backend", idBackend);
 
         // Inserta el registro y devuelve el resultado.
-        return db.insert("tasks", null, registro);
+        return db.insert("article", null, registro);
     }
 
     /**
@@ -95,7 +97,7 @@ public class DbAdapter {
      * @return Devuelve el nº de registros afectados.
      */
     public int borrarTarea(long idRegistro) {
-        return db.delete("tasks",  "_id = "
+        return db.delete("article",  "_id = "
                 + idRegistro, null);
     }
 
@@ -106,7 +108,7 @@ public class DbAdapter {
      * @return Cursor Devuelve un cursor con los registros obtenidos.
      */
     public Cursor obtenerTareas() {
-        return db.query("tasks", new String[] {"_id","task","id_backend","is_read"}, null, null, null, null, null);
+        return db.query("article", new String[] {"_id","name","description","price","id_seller","id_backend","is_read"}, null, null, null, null, null);
     }
 
     /**
@@ -118,7 +120,7 @@ public class DbAdapter {
      * @throws SQLException
      */
     public Cursor obtenerTarea (long idRegistro) throws SQLException {
-        Cursor registro = db.query(true, "tasks",new String[] { "_id","task","id_backend","is_read"},
+        Cursor registro = db.query(true, "article",new String[] {"_id","name","description","price","id_seller","id_backend","is_read"},
                 "_id =" + idRegistro, null, null, null, null, null);
 
         // Si lo ha encontrado, apunta al inicio del cursor.
@@ -137,7 +139,7 @@ public class DbAdapter {
      */
     public Cursor obtenerUltimaTareaLocal() throws SQLException {
         int result = 0;
-        Cursor registro = db.query(true, "tasks",new String[] { "_id","task","id_backend","is_read"},
+        Cursor registro = db.query(true, "article",new String[] { "_id","name","description","price","id_seller","id_backend","is_read"},
                 "id_backend = 0"  , null, null, null, null, null);
         // Si lo ha encontrado, apunta al inicio del cursor.
         if (registro != null) {
@@ -153,7 +155,7 @@ public class DbAdapter {
         registro.put("id_backend", -1);
 
         // Inserta el registro y devuelve el resultado.
-        return db.update("tasks", registro, "id_backend=0", null);
+        return db.update("article", registro, "id_backend=0", null);
     }
     /**
      * obtenerUltimaTareaBackend
@@ -164,7 +166,7 @@ public class DbAdapter {
      */
     public Cursor obtenerUltimaTareaBackend () throws SQLException {
         int result = 0;
-        Cursor registro = db.query(true, "tasks",new String[] { "_id","task","id_backend","is_read"},
+        Cursor registro = db.query(true, "article",new String[] {"_id","name","description","price","id_seller","id_backend","is_read"},
                 null, null, null, null, "id_backend DESC"," 1");
         // Si lo ha encontrado, apunta al inicio del cursor.
         if (registro != null) {
@@ -178,18 +180,21 @@ public class DbAdapter {
      * Hace un UPDATE de los valores del registro cuyo id es idRegistro.
      *
      * @param  idRegistro id del registro que se quiere modificar.
-     * @param  task
+     * @param  name
      * @return int cantidad registros han sido afectados.
      */
-    public int actualizarTarea(long idRegistro, String task) {
-        // Creamos un registro
+    public int actualizarTarea(long idRegistro, String name, String description, Float price, Integer idBackend) {
+        // Creamos un registrotring task
         ContentValues registro = new ContentValues();
 
         // Agrega los datos.
-        registro.put("task", task);
+        registro.put("name", name);
+        registro.put("description", description);
+        registro.put("price", price);
+        registro.put("id_backend", idBackend);
 
         // Inserta el registro y devuelve el resultado.
-        return db.update("tasks", registro,
+        return db.update("article", registro,
                 "_id=" + idRegistro, null);
     }
 

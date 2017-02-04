@@ -11,6 +11,7 @@ public class Article {
     private Integer idBackend;
     private String name;
     private String description;
+    private Float price;
     private Date publishDate;
     private Integer latitude;
     private Integer longitude;
@@ -53,6 +54,14 @@ public class Article {
         this.description = description;
     }
 
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
     public Date getPublishDate() {
         return publishDate;
     }
@@ -91,5 +100,21 @@ public class Article {
 
     public void setIsRead(Integer isRead) {
         this.isRead = isRead;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", idBackend=" + idBackend +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", publishDate=" + publishDate +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", idSeller=" + idSeller +
+                ", isRead=" + isRead +
+                '}';
     }
 }

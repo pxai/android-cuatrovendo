@@ -25,11 +25,11 @@ class SQLiteHelper extends SQLiteOpenHelper {
             " name text not null," +
             " description text not null," +
             " price float not null default 0.0," +
-            " publishDate text not null," +
+            " publish_date text not null," +
             " latitude float not null default 0.0," +
             " longitude float not null default 0.0," +
-            " idseller integer null default 0," +
-            " idbackend integer not null default 0," +
+            " id_seller integer null default 0," +
+            " id_backend integer not null default 0," +
             " is_read integer not null default 0);" +
             " insert into article (name,description, price, publishDate) values('This Phone','This awesome phone', 56.6,'');";
 

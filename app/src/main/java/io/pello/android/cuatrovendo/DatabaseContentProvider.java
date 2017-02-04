@@ -52,18 +52,18 @@ public class DatabaseContentProvider extends ContentProvider {
     private void initUris() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        // This will match: content://io.pello.android.androidsyncadapter.sqlprovider.Todo/tasks
-        uriMatcher.addURI("io.pello.android.androidsyncadapter.sqlprovider.Todo", "tasks/", 1);
+        // This will match: content://io.pello.android.cuatrovendo.sqlprovider.Article/article
+        uriMatcher.addURI("io.pello.android.cuatrovendo.sqlprovider.Article", "articles/", 1);
 
-        // This will match: content://io.pello.android.androidsyncadapter.sqlprovider.Todo/task/2
-        uriMatcher.addURI("io.pello.android.androidsyncadapter.sqlprovider.Todo", "task/*/", 2);
+        // This will match: content://io.pello.android.cuatrovendo.sqlprovider.Article/article/2
+        uriMatcher.addURI("io.pello.android.cuatrovendo.sqlprovider.Article", "article/*/", 2);
 
         // the last one from the backend
-        // This will match: content://io.pello.android.androidsyncadapter.sqlprovider.Todo/tasks/last/backend
-        uriMatcher.addURI("io.pello.android.androidsyncadapter.sqlprovider.Todo", "tasks/last/backend", 3);
+        // This will match: content://io.pello.android.cuatrovendo.sqlprovider.Article/articles/last/backend
+        uriMatcher.addURI("io.pello.android.cuatrovendo.sqlprovider.Article", "articles/last/backend", 3);
 
-        // This will match: content://io.pello.android.androidsyncadapter.sqlprovider.Todo/tasks/last/local
-        uriMatcher.addURI("io.pello.android.androidsyncadapter.sqlprovider.Todo", "tasks/last/local", 4);
+        // This will match: content://io.pello.android.cuatrovendo.sqlprovider.Article/articles/last/local
+        uriMatcher.addURI("io.pello.android.cuatrovendo.sqlprovider.Article", "articles/last/local", 4);
 
     }
 
@@ -120,8 +120,8 @@ public class DatabaseContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         Log.d("PELLODEBUG","CP> insert " + uri);
 
-        dbAdapter.insertarTarea(values.getAsString("task"),values.getAsInteger("backend_id"));
-        Uri resultUri = Uri.parse("content://io.pello.android.androidsyncadapter.sqlprovider.Todo/1");
+        dbAdapter.insertarTarea(values.getAsString("name"), values.getAsString("description"),values.getAsFloat("price"),values.getAsInteger("backend_id"));
+        Uri resultUri = Uri.parse("content://io.pello.android.cuatrovendo.sqlprovider.Article/1");
         return resultUri;
 
     }

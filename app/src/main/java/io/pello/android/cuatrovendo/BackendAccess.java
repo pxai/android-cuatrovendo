@@ -25,8 +25,8 @@ public class BackendAccess {
      * @param idBackend
      * @return List of tasks
      */
-    public List<Task> getLast (int idBackend) {
-        List<Task> tasks = new ArrayList<Task>();
+    public List<Article> getLast (int idBackend) {
+        List<Article> tasks = new ArrayList<Article>();
         DateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
         if (webRequest.get(GET_LAST_URL+idBackend)) {
@@ -37,15 +37,16 @@ public class BackendAccess {
 
         try {
             //JSONObject jsonResponse = new JSONObject(webRequest.getResponseString());
-            JSONArray jsonTasks = new JSONArray(webRequest.getResponseString());
-            for (int i = 0; i < jsonTasks.length(); i++) {
-                Task task = new Task();
-                System.out.println(jsonTasks.getJSONObject(i).getString("task"));
-                task.setBackendId(jsonTasks.getJSONObject(i).getInt("id"));
-                task.setTask(jsonTasks.getJSONObject(i).getString("task"));
-                task.setLastUpdate(isoFormat.parse(jsonTasks.getJSONObject(i).getString("last_update")));
+            JSONArray jsonArticles = new JSONArray(webRequest.getResponseString());
+            for (int i = 0; i < jsonArticles.length(); i++) {
+                Article article = new Article();
+                System.out.println(jsonArticles.getJSONObject(i).getString("task"));
+                article.setIdBackend(jsonArticles.getJSONObject(i).getInt("id"));
+                article.setName(jsonArticles.getJSONObject(i).getString("task"));
+                article.setName(jsonArticles.getJSONObject(i).getString("task"));
+                article.setPrice((float)jsonArticles.getJSONObject(i).getDouble("price"));
 
-                tasks.add(task);
+                tasks.add(article);
             }
         } catch (Exception e) {
             System.err.println("Exception parsing data: " + e.getMessage());
@@ -56,13 +57,13 @@ public class BackendAccess {
     }
 
     /**
-     * inserts a new Task in backend
-     * @param task
+     * inserts a new Article in backend
+     * @param article
      * @return
      */
-    public Integer insertTask (Task task) {
+    public Integer insertArticle (Article article) {
 
-        String json = "{\"task\":{\"id\":1,\"task\":\""+task.getTask()+"\",\"id_frontend\":\""+task.getId()+"\",\"latitude\":6,\"longitude\":1,\"open\":1}}";
+        String json = "{\"task\":{\"id\":1,\"name\":\""+article.getName()+"\",\"id_frontend\":\""+article.getId()+"\",\"latitude\":6,\"longitude\":1,\"open\":1}}";
         try {
             if (webRequest.postJson(CREATE_URL, json)) {
                 System.out.println("OK POST: " + webRequest.getResponseString() + "\n" + webRequest.getResponseCode());
@@ -70,7 +71,7 @@ public class BackendAccess {
                 System.err.println("Error: " + webRequest.getExceptionMessage() + "\n" + webRequest.getResponseCode());
             }
         } catch (Exception e) {
-            System.err.println("Error inserting Task: " + e.getMessage());
+            System.err.println("Error inserting Article: " + e.getMessage());
         }
         return 0;
     }
