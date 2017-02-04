@@ -25,7 +25,7 @@ public class TodoSyncAdapter  extends AbstractThreadedSyncAdapter {
     private final AccountManager mAccountManager;
     private ContentResolver contentResolver;
     private BackendAccess backendAccess;
-    private String contentUri = "content://io.pello.android.androidsyncadapter.sqlprovider.Todo";
+    private String contentUri = "content://io.pello.android.cuatrovendo.sqlprovider.Article";
 
     public TodoSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -59,8 +59,8 @@ public class TodoSyncAdapter  extends AbstractThreadedSyncAdapter {
             /////////////////// UPDATE FROM BACKEND /////////////////////
             // Get Last backend_id locally
             cursor = provider.query(
-                    Uri.parse(contentUri + "/tasks/last/backend"),   // The content URI of the words table
-                    new String[]{"_id","task","id_backend","is_read"},
+                    Uri.parse(contentUri + "/articles/last/backend"),   // The content URI of the words table
+                    new String[]{"_id","name","description","price","id_seller","id_backend","is_read"},
                     "",                        // The columns to return for each row
                     new String[]{""},                     // Selection criteria
                     "");
@@ -71,27 +71,27 @@ public class TodoSyncAdapter  extends AbstractThreadedSyncAdapter {
             Log.d("PELLODEBUG'", "Last backend Id: " + lastBackendId);
 
             // Get ToDo from the remote server
-            List<Task> tasks =  backendAccess.getLast(lastBackendId);
-            Log.d("PELLODEBUG", tasks.toString());
-            for (Task task : tasks) {
+            List<Article> articles =  backendAccess.getLast(lastBackendId);
+            Log.d("PELLODEBUG", articles.toString());
+            for (Article article : articles) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("task",task.getTask());
-                contentValues.put("backend_id",task.getBackendId());
+                contentValues.put("name",article.getName());
+                contentValues.put("id_backend",article.getIdBackend());
 
                 // We finally make the request to the content provider
                 Uri resultUri = provider.insert(
                         Uri.parse(contentUri),   // The content URI
                         contentValues
                 );
-                Log.d("PELLODEBUG","Inserted in local db: " + task.getTask());
+                Log.d("PELLODEBUG","Inserted in local db: " + article.getName());
             }
             /////////////////// UPDATE FROM LOCAL TO BACKEND
             // get all local record with id_backend = 0
             // send them to backend
             // update local id_backend with -1
             cursor = provider.query(
-                    Uri.parse(contentUri + "/tasks/last/local"),   // The content URI of the words table
-                    new String[]{"_id","task","id_backend","is_read"},
+                    Uri.parse(contentUri + "/articles/last/local"),   // The content URI of the words table
+                    new String[]{"_id","name","description","price","id_seller","id_backend","is_read"},
                     "",                        // The columns to return for each row
                     new String[]{""},                     // Selection criteria
                     "");
@@ -103,12 +103,12 @@ public class TodoSyncAdapter  extends AbstractThreadedSyncAdapter {
                 cursor.moveToFirst();
                 while (cursor.isAfterLast() == false) {
 
-                    Task task = new Task();
-                    task.setId(cursor.getInt(0));
-                    task.setTask(cursor.getString(1));
+                    Article article = new Article();
+                    article.setId(cursor.getInt(0));
+                    article.setName(cursor.getString(1));
 
-                    backendAccess.insertTask(task);
-                    Log.d("PELLODEBUG","Sent data to backend: " + task);
+                    backendAccess.insertArticle(article);
+                    Log.d("PELLODEBUG","Sent data to backend: " + article);
 
                     cursor.moveToNext();
                 }

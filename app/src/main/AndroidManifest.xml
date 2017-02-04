@@ -31,10 +31,10 @@
         </activity>
         <provider
             android:name=".DatabaseContentProvider"
-            android:authorities="io.pello.android.cuatrovendo.sqlprovider.Todo"
+            android:authorities="io.pello.android.cuatrovendo.sqlprovider.Article"
             android:enabled="true"
             android:exported="true">
-            <uses-permission android:name="io.pello.android.cuatrovendo.sqlprovider.Todo.READ" />
+            <uses-permission android:name="io.pello.android.cuatrovendo.sqlprovider.Article.READ" />
         </provider>
 
         <service

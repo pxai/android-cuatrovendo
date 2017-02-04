@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
-        android:contentAuthority="io.pello.android.cuatrovendo.sqlprovider.Todo"
+        android:contentAuthority="io.pello.android.cuatrovendo.sqlprovider.Article"
         android:accountType="io.pello.android"
         android:userVisible="true"
         android:allowParallelSyncs="false"
