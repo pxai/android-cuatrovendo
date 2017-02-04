@@ -18,14 +18,20 @@ import android.util.Log;
  */
 class SQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String NOMBRE_BD = "tasklist.db";
-    public static final int VERSION_BD = 3;
-    public static final String SQLCREAR = "create table tasks "+
+    public static final String NOMBRE_BD = "cuatrovendo.db";
+    public static final int VERSION_BD = 1;
+    public static final String SQLCREAR = "create table article "+
             " (_id integer primary key autoincrement, " +
-            " task text not null," +
-            " id_backend integer not null default 0," +
+            " name text not null," +
+            " description text not null," +
+            " price float not null default 0.0," +
+            " publishDate text not null," +
+            " latitude float not null default 0.0," +
+            " longitude float not null default 0.0," +
+            " idseller integer null default 0," +
+            " idbackend integer not null default 0," +
             " is_read integer not null default 0);" +
-            " insert into tasks (task) values('EAT');";
+            " insert into article (name,description, price, publishDate) values('This Phone','This awesome phone', 56.6,'');";
 
 
     /**
@@ -45,7 +51,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Se ejecuta la sentencia de creación de la tabla notas.
-        db.execSQL("DROP TABLE IF EXISTS tasks");
+        db.execSQL("DROP TABLE IF EXISTS article");
         db.execSQL(SQLCREAR);
         Log.d("DEBUG","Ok, BD creada");
     }
@@ -64,7 +70,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
         // En este caso en el upgrade realmente
         // lo que hacemos es cargarnos lo que hay...
-        db.execSQL("DROP TABLE IF EXISTS tasks");
+        db.execSQL("DROP TABLE IF EXISTS article");
 
         // ... y lo volvemos a generar
         onCreate(db);
