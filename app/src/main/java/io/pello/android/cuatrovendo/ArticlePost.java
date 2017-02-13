@@ -12,5 +12,6 @@ public class ArticlePost extends Article {
 	
 	public ArticlePost (Article article) {
 		this.article = article;
+		article.setUser(((User) article.getUser()).getId());
 	}
 }

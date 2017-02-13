@@ -101,7 +101,7 @@ public class ArticleManager {
 	 * @return
 	 */
 	public boolean updateArticle(Article article) {
-		Call<Void> articleApiCall = articleApiClient.update(article);
+		Call<Void> articleApiCall = articleApiClient.update(new ArticlePost(article));
 		boolean result = false;
 		
 		try {

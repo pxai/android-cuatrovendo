@@ -25,18 +25,16 @@ public interface ArticleApiClient {
 	
 	@Headers("Accept: application/json")
 	@GET("/2dam-project-multisite/web/app_dev.php/admin/api/article/detail/{id}")
-    Call<Article> article(
-			@Path("id") Long id);
+    Call<Article> article(@Path("id") Long id);
 	
 	@Headers("Accept: application/json")
 	@POST("/2dam-project-multisite/web/app_dev.php/admin/api/article/create")
     Call<Void> create(@Body ArticlePost article);
 	
+	@Headers("Accept: application/json")
 	@PUT("/2dam-project-multisite/web/app_dev.php/admin/api/article/update")
-    Call<Void> update(Article article);
+    Call<Void> update(@Body ArticlePost article);
 	
-	@DELETE("3"
-			+ "/api/article/delete/{id}")
-    Call<Void> delete(
-			@Path("id") Long id);
+	@DELETE("/2dam-project-multisite/web/app_dev.php/admin/api/article/delete/{id}")
+    Call<Void> delete(@Path("id") Long id);
 }

@@ -7,34 +7,48 @@ import java.util.Date;
  */
 
 public class Article {
-    private Integer id;
-    private Integer idBackend;
+    private Long id;
+    private Long idBackend;
     private String name;
     private String description;
     private Float price;
     private Date publishDate;
     private Float latitude;
     private Float longitude;
-    private Integer idSeller;
+    private Object user;
     private Integer isRead;
 
     public Article () {
 
     }
 
-    public Integer getId() {
+    
+    
+    public Article(Long id, String name, String description, Float price, Float latitude, Float longitude,  User user) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.user = user;
+	}
+
+
+
+	public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getIdBackend() {
+    public Long getIdBackend() {
         return idBackend;
     }
 
-    public void setIdBackend(Integer idBackend) {
+    public void setIdBackend(Long idBackend) {
         this.idBackend = idBackend;
     }
 
@@ -70,31 +84,47 @@ public class Article {
         this.publishDate = publishDate;
     }
 
+
+
+
+
     public Float getLatitude() {
-        return latitude;
-    }
+		return latitude;
+	}
 
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
 
-    public Float getLongitude() {
-        return longitude;
-    }
 
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
-    }
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
 
-    public Integer getIdSeller() {
-        return idSeller;
-    }
 
-    public void setIdSeller(Integer idSeller) {
-        this.idSeller = idSeller;
-    }
 
-    public Integer getIsRead() {
+	public Float getLongitude() {
+		return longitude;
+	}
+
+
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
+	}
+
+
+
+
+    public Object getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(Object user) {
+		this.user = user;
+	}
+
+
+	public Integer getIsRead() {
         return isRead;
     }
 
@@ -102,7 +132,9 @@ public class Article {
         this.isRead = isRead;
     }
 
-    @Override
+    
+
+	@Override
     public String toString() {
         return "Article{" +
                 "id=" + id +
@@ -113,7 +145,7 @@ public class Article {
                 ", publishDate=" + publishDate +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", idSeller=" + idSeller +
+                ", user=" + user +
                 ", isRead=" + isRead +
                 '}';
     }
